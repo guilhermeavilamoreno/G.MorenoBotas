@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <title>G.MORENO BOTAS E UTILITÁRIOS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+        name="description"
+        content="Loja de botas e acessórios G.MORENO - Qualidade, estilo e custo-benefício para o seu dia a dia e aventuras."
+    />
+
+    <link rel="icon" href="imagens/favicon.ico" type="image/x-icon" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
+        rel="stylesheet"
+    />
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Open Sans', sans-serif;
+            background-color: #2b1b13;
+            color: #f5f5dc;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        header {
+            background-color: #1f1a18;
+            padding: 20px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .logo {
+            width: 120px;
+        }
+
+        nav {
+            display: flex;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 40px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #f5f5dc;
+            font-weight: 700;
+            font-size: 18px;
+            padding-bottom: 4px;
+            border-bottom: 2px solid transparent;
+            transition: color 0.3s, border-color 0.3s;
+        }
+
+        nav ul li a:hover,
+        nav ul li a:focus {
+            color: #d09e63;
+            border-bottom-color: #d09e63;
+            outline: none;
+        }
+
+        .produto-card button:focus,
+        nav ul li a:focus {
+            outline: 2px solid #d09e63;
+            outline-offset: 3px;
+        }
+
+        /* Botão hambúrguer */
+        .menu-hamburguer {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 28px;
+            height: 24px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1100;
+        }
+
+        .menu-hamburguer:focus {
+            outline: 2px solid #d09e63;
+            outline-offset: 3px;
+        }
+
+        .menu-hamburguer span {
+            width: 100%;
+            height: 3px;
+            background-color: #f5f5dc;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            transform-origin: 1px;
+        }
+
+        /* Animação do ícone para "X" quando ativo */
+        .menu-hamburguer.active span:nth-child(1) {
+            transform: rotate(45deg);
+        }
+        .menu-hamburguer.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .menu-hamburguer.active span:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+
+        /* Carrossel */
+        .carrossel {
+            position: relative;
+            overflow: hidden;
+            height: 500px;
+            max-width: 100%;
+            border-radius: 12px;
+            margin: 20px auto;
+            max-width: 1440px;
+            box-shadow: 0 6px 20px rgba(208, 158, 99, 0.25);
+        }
+
+        .carrossel img {
+            width: 100%;
+            height: 550px;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            z-index: 0;
+            border-radius: 12px;
+        }
+
+        .carrossel img.active {
+            opacity: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        main {
+            padding: 30px 20px;
+            text-align: center;
+            background-color: #40312a;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #f0c287;
+            margin-bottom: 15px;
+        }
+
+        p {
+            font-size: 20px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        /* Seção Produtos com abas */
+        #produtos {
+            text-align: center;
+            padding: px 20px;
+            background-color: #2e2320;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            border-radius: 5px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        #produtos h2 {
+            font-size: 30px;
+            margin-bottom: 20px;
+            color: #f0c287;
+        }
+
+        /* Abas - estilizadas como botões */
+        .abas {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            gap: 30px;
+        }
+
+        .aba {
+            cursor: pointer;
+            padding: 14px 36px;
+            font-weight: 700;
+            font-size: 18px;
+            border-radius: 30px;
+            border: none;
+            background: linear-gradient(135deg, #d09e63 0%, #f0c287 100%);
+            color: #2b1b13;
+            box-shadow: 0 6px 12px rgba(208, 158, 99, 0.7);
+            transition: background 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            user-select: none;
+            outline-offset: 4px;
+        }
+
+        .aba:hover,
+        .aba:focus {
+            background: linear-gradient(135deg, #b37e32 0%, #d4af6e 100%);
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(179, 126, 50, 0.8);
+            outline: none;
+        }
+
+        .aba.active {
+            background: linear-gradient(135deg, #b37e32 0%, #d4af6e 100%);
+            box-shadow: 0 8px 20px rgba(179, 126, 50, 1);
+            transform: scale(1.1);
+            color: #2b1b13;
+        }
+
+        /* Grid de produtos e acessórios */
+        .produtos-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+        }
+
+        /* Produtos com largura 100% para preencher o container */
+        .produto-card {
+            background: #4b3a32;
+            padding: 20px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 280px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            color: #f5f5dc;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 420px;
+            transition: transform 0.3s ease;
+        }
+
+        .produto-card:hover,
+        .produto-card:focus-within {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 15px rgba(208, 158, 99, 0.8);
+        }
+
+        .produto-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .produto-card h3 {
+            font-size: 20px;
+            margin: 10px 0 5px;
+        }
+
+        .produto-card p {
+            font-size: 16px;
+            margin: 8px 0;
+            flex-grow: 1;
+        }
+
+        .preco {
+            color: #f0c287;
+            font-weight: 700;
+            margin: 8px 0 15px;
+            font-size: 18px;
+        }
+
+        /* Botões de compra personalizados */
+        .produto-card button {
+            background: linear-gradient(135deg, #d09e63 0%, #f0c287 100%);
+            color: #2b1b13;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(208, 158, 99, 0.6);
+            transition: background 0.4s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            user-select: none;
+        }
+
+        .produto-card button:hover,
+        .produto-card button:focus {
+            background: linear-gradient(135deg, #b37e32 0%, #d4af6e 100%);
+            transform: scale(1.05);
+            box-shadow: 0 6px 14px rgba(179, 126, 50, 0.8);
+            outline: none;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1f1a18;
+            padding: 20px 15px;
+            text-align: center;
+        }
+
+        footer p {
+            margin: 10px 0;
+            color: #f5f5dc;
+            font-size: 16px;
+        }
+
+        footer a img {
+            width: 30px;
+            margin: 0 10px;
+            vertical-align: middle;
+            transition: transform 0.3s;
+        }
+
+        footer a img:hover,
+        footer a img:focus {
+            transform: scale(1.1);
+            outline: none;
+        }
+
+        /* Ícone WhatsApp fixo no canto inferior direito */
+        .whatsapp-fixo {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            width: 60px;
+            height: 60px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .whatsapp-fixo:hover,
+        .whatsapp-fixo:focus {
+            transform: scale(1.1);
+            outline: none;
+        }
+
+        /* Estilos para telas menores (mobile) */
+        @media (max-width: 768px) {
+            /* Esconde menu padrão */
+            nav ul {
+                display: none;
+                flex-direction: column;
+                background-color: #1f1a18;
+                position: absolute;
+                top: 65px;
+                right: 30px;
+                width: 200px;
+                border-radius: 8px;
+                box-shadow: 0 6px 12px rgba(208, 158, 99, 0.7);
+                z-index: 1050;
+                transition: max-height 0.3s ease;
+                overflow: hidden;
+                max-height: 0;
+            }
+
+            /* Quando o menu estiver ativo */
+            nav ul.active {
+                display: flex;
+                max-height: 500px; /* valor suficiente para mostrar os itens */
+            }
+
+            nav ul li {
+                margin: 0;
+            }
+
+            nav ul li a {
+                padding: 12px 20px;
+                font-size: 20px;
+                border-bottom: 1px solid #d09e63;
+            }
+
+            nav ul li a:last-child {
+                border-bottom: none;
+            }
+
+            /* Mostrar botão hambúrguer */
+            .menu-hamburguer {
+                display: flex;
+            }
+
+            .produtos-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .produto-card {
+                width: 100%;
+                height: 100%;
+            }
+
+            .carrossel {
+                height: 300px;
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+                border-radius: 12px;
+                margin: 20px auto;
+                max-width: 100%;
+            }
+
+            .carrossel img {
+                height: 300px;
+            }
+
+            .abas {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .aba {
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="#" aria-label="Página inicial">
+            <img
+                src="imagens/Logomarca-bota.png"
+                alt="Logo da G.MORENO"
+                class="logo"
+            />
+        </a>
+
+        <button
+            class="menu-hamburguer"
+            aria-label="Abrir menu"
+            aria-expanded="false"
+            aria-controls="menu-principal"
+            id="btn-menu"
+        >
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav aria-label="Menu principal">
+            <ul id="menu-principal">
+                <li><a href="#historia">História</a></li>
+                <li><a href="#produtos">Produtos</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Carrossel de Imagens -->
+    <div
+        class="carrossel"
+        aria-label="Carrossel de banners promocionais"
+        role="region"
+    >
+        <img
+            src="imagens/carrossel-1.png"
+            class="active"
+            alt="Bota Adventure Black: design resistente para aventura e trabalho"
+        />
+        <img
+            src="imagens/carrossel-2.png"
+            alt="Bota Cat Basic: conforto esportivo e estilo para o dia a dia"
+        />
+        <img
+            src="imagens/carrossel-3.png"
+            alt="Bota Onda7: ideal para motociclistas com proteção extra"
+        />
+    </div>
+
+    <main id="historia" role="main">
+        <h1>Bem-vindo à G.MORENO</h1>
+        <p>
+            A G.MORENO BOTAS E UTILITÁRIOS nasceu em 2023, em Curitiba e região
+            metropolitana, com a proposta de oferecer botas e acessórios de
+            qualidade, priorizando o custo-benefício para nossos clientes. Nossa
+            missão é entregar produtos resistentes, estilosos e acessíveis, ideais
+            para o trabalho, trilhas e o dia a dia.
+        </p>
+    </main>
+
+    <section id="produtos" tabindex="-1">
+        <h2>Produtos em Destaque</h2>
+
+        <!-- Abas -->
+        <div class="abas" role="tablist" aria-label="Categorias de produtos">
+            <button
+                class="aba active"
+                role="tab"
+                aria-selected="true"
+                aria-controls="produtos-botas"
+                id="aba-botas"
+                tabindex="0"
+                >Botas</button
+            >
+            <button
+                class="aba"
+                role="tab"
+                aria-selected="false"
+                aria-controls="produtos-acessorios"
+                id="aba-acessorios"
+                tabindex="-1"
+                >Acessórios</button
+            >
+        </div>
+
+        <!-- Conteúdo das abas -->
+        <div
+            id="produtos-botas"
+            role="tabpanel"
+            aria-labelledby="aba-botas"
+        >
+            <div class="produtos-grid">
+                <article
+                    class="produto-card"
+                    tabindex="0"
+                    aria-label="Produto Bota Adventure Black, preço 99 reais"
+                >
+                    <img
+                        src="imagens/bota-masculina-stefanini-preta.png"
+                        alt="Bota Adventure Black em couro legítimo, solado antiderrapante"
+                    />
+                    <h3>Bota Adventure Black</h3>
+                    <p>Bota em couro legítimo, solado antiderrapante.</p>
+                    <p class="preco">R$ 99,00</p>
+                    <button
+                        onclick="window.open('https://encurtador.com.br/a7TxM', '_blank')"
+                        aria-label="Comprar Bota Adventure Black agora"
+                    >
+                        Comprar agora
+                    </button>
+                </article>
+
+                <article
+                    class="produto-card"
+                    tabindex="0"
+                    aria-label="Produto Bota Cat Basic, preço 89 reais"
+                >
+                    <img
+                        src="imagens/cat-simples-basic.png"
+                        alt="Bota Cat Basic esportiva e confortável"
+                    />
+                    <h3>Bota Cat Basic</h3>
+                    <p>Design esportivo, conforto e resistência.</p>
+                    <p class="preco">R$ 89,00</p>
+                    <button
+                        onclick="window.open('https://encurtador.com.br/a7TxM', '_blank')"
+                        aria-label="Comprar Bota Cat Basic agora"
+                    >
+                        Comprar agora
+                    </button>
+                </article>
+
+                <article
+                    class="produto-card"
+                    tabindex="0"
+                    aria-label="Produto Bota Onda7, preço 89 reais"
+                >
+                    <img
+                        src="imagens/bota-onda7-preta.png"
+                        alt="Bota Onda7 ideal para andar de moto, com proteção para troca de marcha"
+                    />
+                    <h3>Bota Onda7</h3>
+                    <p>
+                        Bota ideal para andar de moto, com proteção para troca de
+                        marcha.
+                    </p>
+                    <p class="preco">R$ 89,00</p>
+                    <button
+                        onclick="window.open('https://encurtador.com.br/a7TxM', '_blank')"
+                        aria-label="Comprar Bota Onda7 agora"
+                    >
+                        Comprar agora
+                    </button>
+                </article>
+            </div>
+        </div>
+
+        <div
+            id="produtos-acessorios"
+            role="tabpanel"
+            aria-labelledby="aba-acessorios"
+            hidden
+        >
+            <div class="produtos-grid">
+                <!-- Exemplo de acessório -->
+                <article
+                    class="produto-card"
+                    tabindex="0"
+                    aria-label="Produto Cinto de Couro, preço 49 reais"
+                >
+                    <img
+                        src="imagens/cinto-couro.png"
+                        alt="Cinto de couro legítimo, estilo clássico"
+                    />
+                    <h3>Cinto de Couro</h3>
+                    <p>Cinto clássico em couro legítimo, resistente e estiloso.</p>
+                    <p class="preco">R$ 49,00</p>
+                    <button
+                        onclick="window.open('https://encurtador.com.br/a7TxM', '_blank')"
+                        aria-label="Comprar Cinto de Couro agora"
+                    >
+                        Comprar agora
+                    </button>
+                </article>
+
+                <article
+                    class="produto-card"
+                    tabindex="0"
+                    aria-label="Produto Carteira Masculina, preço 59 reais"
+                >
+                    <img
+                        src="imagens/carteira-masculina.png"
+                        alt="Carteira masculina em couro com vários compartimentos"
+                    />
+                    <h3>Carteira Masculina</h3>
+                    <p>
+                        Carteira em couro com diversos compartimentos para cartões e
+                        dinheiro.
+                    </p>
+                    <p class="preco">R$ 59,00</p>
+                    <button
+                        onclick="window.open('https://encurtador.com.br/a7TxM', '_blank')"
+                        aria-label="Comprar Carteira Masculina agora"
+                    >
+                        Comprar agora
+                    </button>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contato">
+        <p>Siga-nos :</p>
+        <a
+            href="https://www.instagram.com/g.morenobotas/"
+            target="_blank"
+            rel="noopener"
+            aria-label="Instagram da G.MORENO"
+        >
+            <img src="imagens/instagram.png" alt="Ícone Instagram" />
+        </a>
+        <a
+            href="https://www.facebook.com/semshoesco"
+            target="_blank"
+            rel="noopener"
+            aria-label="Facebook da G.MORENO"
+        >
+            <img src="imagens/facebook.png" alt="Ícone Facebook" />
+        </a>
+        <p>&copy; 2023 G.MORENO BOTAS E UTILITÁRIOS</p>
+    </footer>
+
+    <a
+        href="https://encurtador.com.br/a7TxM"
+        target="_blank"
+        rel="noopener"
+        class="whatsapp-fixo"
+        title="WhatsApp G.MORENO"
+        aria-label="WhatsApp G.MORENO para atendimento"
+    >
+        <img
+            src="imagens/whatsapp.png"
+            alt="Ícone do WhatsApp para atendimento"
+            style="width: 100%; height: 100%"
+        />
+    </a>
+
+    <script>
+        // Carrossel automático
+        let index = 0;
+        const imagens = document.querySelectorAll('.carrossel img');
+
+        function mostrarProximaImagem() {
+            imagens[index].classList.remove('active');
+            index = (index + 1) % imagens.length;
+            imagens[index].classList.add('active');
+        }
+
+        setInterval(mostrarProximaImagem, 10000);
+
+        // Controle das abas de produtos/acessórios
+        const abas = document.querySelectorAll('.aba');
+        const paineis = {
+            'aba-botas': document.getElementById('produtos-botas'),
+            'aba-acessorios': document.getElementById('produtos-acessorios'),
+        };
+
+        abas.forEach((aba) => {
+            aba.addEventListener('click', () => {
+                // Atualiza seleção visual das abas
+                abas.forEach((b) => {
+                    b.classList.remove('active');
+                    b.setAttribute('aria-selected', 'false');
+                    b.setAttribute('tabindex', '-1');
+                });
+                aba.classList.add('active');
+                aba.setAttribute('aria-selected', 'true');
+                aba.setAttribute('tabindex', '0');
+                aba.focus();
+
+                // Mostra/oculta os painéis de conteúdo
+                Object.values(paineis).forEach((painel) => (painel.hidden = true));
+                paineis[aba.id].hidden = false;
+            });
+
+            // Permitir navegação via teclado: Enter ou Espaço
+            aba.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    aba.click();
+                }
+            });
+        });
+
+        // Menu hambúrguer
+        const btnMenu = document.getElementById('btn-menu');
+        const menuPrincipal = document.getElementById('menu-principal');
+
+        btnMenu.addEventListener('click', () => {
+            const expanded = btnMenu.getAttribute('aria-expanded') === 'true' || false;
+            btnMenu.setAttribute('aria-expanded', !expanded);
+            btnMenu.classList.toggle('active');
+            menuPrincipal.classList.toggle('active');
+        });
+
+        // Fechar menu ao clicar fora (opcional, mais amigável)
+        document.addEventListener('click', (e) => {
+            if (
+                !btnMenu.contains(e.target) &&
+                !menuPrincipal.contains(e.target) &&
+                menuPrincipal.classList.contains('active')
+            ) {
+                btnMenu.setAttribute('aria-expanded', 'false');
+                btnMenu.classList.remove('active');
+                menuPrincipal.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
